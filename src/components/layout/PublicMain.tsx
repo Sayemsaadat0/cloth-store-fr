@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../core/Navbar";
+import { Footer } from "../core/Footer";
 // import Navbar from "../Shared/Navbar";
 // import Footar from "../Shared/Footar";
 
@@ -24,7 +25,7 @@ const PublicMain = () => {
                     <Outlet />
                 </div>
             </main>
-            {/* <Footar></Footar> */}
+            <Footer />
         </div>
     );
 };

@@ -118,25 +118,25 @@ export function PeoductSection() {
   };
 
   return (
-    <section id="products" className="relative px-4 py-24 sm:px-6 lg:px-8">
+    <section id="products" className="relative py-24 ">
       <div className="mx-auto max-w-7xl">
         {/* Main Products Box */}
-        <div className="group relative overflow-hidden rounded-3xl border border-white/30 bg-gradient-to-br from-white/10 via-white/5 to-white/10 p-8 backdrop-blur-2xl sm:p-12 lg:p-16">
+        <div className="group relative overflow-hidden rounded-3xl border border-white/30 bg-linear-to-br from-white/10 via-white/5 to-white/10 p-8 backdrop-blur-2xl sm:p-12 lg:p-16">
           {/* Decorative elements */}
-          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-gradient-to-br from-purple-500/10 to-transparent blur-3xl"></div>
-          <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-gradient-to-tr from-blue-500/10 to-transparent blur-3xl"></div>
+          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-linear-to-br from-purple-500/10 to-transparent blur-3xl"></div>
+          <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-linear-to-tr from-blue-500/10 to-transparent blur-3xl"></div>
           
           <div className="relative">
             {/* Section Header */}
             <div className="mb-16 text-center">
-              <span className="mb-6 inline-block rounded-full border border-white/40 bg-gradient-to-r from-white/15 to-white/5 px-6 py-3 text-sm tracking-widest text-white backdrop-blur-xl">
+              <span className="mb-6 inline-block rounded-full border border-white/40 bg-linear-to-r from-white/15 to-white/5 px-6 py-3 text-sm tracking-widest text-white backdrop-blur-xl">
                 OUR COLLECTION
               </span>
               <h2 className="mt-6 text-4xl text-white sm:text-5xl lg:text-6xl">
-                <span className="block bg-gradient-to-r from-white via-white to-white/80 bg-clip-text font-serif italic text-transparent">
+                <span className="block bg-linear-to-r from-white via-white to-white/80 bg-clip-text font-serif italic text-transparent">
                   Curated Luxury
                 </span>
-                <span className="mt-2 block bg-gradient-to-r from-white/80 via-white to-white bg-clip-text font-serif italic text-transparent">
+                <span className="mt-2 block bg-linear-to-r from-white/80 via-white to-white bg-clip-text font-serif italic text-transparent">
                   For Every Occasion
                 </span>
               </h2>
@@ -156,7 +156,7 @@ export function PeoductSection() {
                 >
                   <span className="relative z-10">{category}</span>
                   {selectedCategory === category && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-white/10 via-white/20 to-white/10"></div>
                   )}
                 </button>
               ))}
@@ -167,17 +167,17 @@ export function PeoductSection() {
               {filteredProducts.map((product, index) => (
                 <div
                   key={product.id}
-                  className="group/card animate-scale-in overflow-hidden rounded-2xl border border-white/20 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl transition-all hover:scale-105 hover:border-white/40 hover:shadow-2xl hover:shadow-white/10"
+                  className="group/card animate-scale-in overflow-hidden rounded-2xl border border-white/20 bg-linear-to-br from-white/10 to-white/5 backdrop-blur-xl transition-all hover:scale-105 hover:border-white/40 hover:shadow-2xl hover:shadow-white/10"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {/* Product Image */}
-                  <div className="relative aspect-[3/4] overflow-hidden">
+                  <div className="relative aspect-3/4 overflow-hidden">
                     <ImageWithFallback
                       src={product.image}
                       alt={product.name}
                       className="h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"></div>
+                    <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"></div>
                     
                     {/* Wishlist button */}
                     <button className="absolute right-4 top-4 rounded-full border border-white/30 bg-white/20 p-3 backdrop-blur-xl opacity-0 transition-all hover:scale-110 hover:bg-white/30 group-hover/card:opacity-100">
@@ -220,7 +220,7 @@ export function PeoductSection() {
             <div className="mt-16 text-center">
               <Button className="group/btn relative overflow-hidden rounded-full border-2 border-white/40 bg-white/20 px-16 py-7 text-white backdrop-blur-xl transition-all hover:scale-105 hover:border-white/60 hover:bg-white/30 hover:shadow-2xl hover:shadow-white/20">
                 <span className="relative z-10">View All Products</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 opacity-0 transition-opacity group-hover/btn:opacity-100"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 opacity-0 transition-opacity group-hover/btn:opacity-100"></div>
               </Button>
             </div>
           </div>
@@ -229,7 +229,7 @@ export function PeoductSection() {
 
       {/* Product Details Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[90vh] max-w-7xl overflow-y-auto border border-gray-200 bg-white z-[100]">
+        <DialogContent className="max-h-[90vh] max-w-7xl overflow-y-auto border border-gray-200 bg-white z-100">
           {selectedProduct && (
             <div className="grid gap-8 md:grid-cols-2">
               {/* Product Image */}
@@ -261,7 +261,7 @@ export function PeoductSection() {
                   <div className="space-y-2">
                     {selectedProduct.features.map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-2">
-                        <Star className="mt-0.5 h-4 w-4 flex-shrink-0 fill-amber-400 text-amber-400" />
+                        <Star className="mt-0.5 h-4 w-4 shrink-0 fill-amber-400 text-amber-400" />
                         <span className="text-sm text-gray-600">{feature}</span>
                       </div>
                     ))}
