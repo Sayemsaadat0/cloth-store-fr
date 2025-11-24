@@ -1,10 +1,7 @@
-import { Outlet } from "react-router-dom"
-import {
-  SidebarProvider,
-  SidebarInset,
-} from "@/components/ui/sidebar"
-import { SidebarNavigation } from "@/components/core/SidebarNavigation"
-import { DashboardNavbar } from "@/components/core/DashboardNavbar"
+import { Outlet } from "react-router-dom";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { SidebarNavigation } from "@/components/core/SidebarNavigation";
+import { DashboardNavbar } from "@/components/core/DashboardNavbar";
 
 const DashboardLayout = () => {
   return (
@@ -12,13 +9,12 @@ const DashboardLayout = () => {
       <SidebarNavigation />
       <SidebarInset>
         <DashboardNavbar />
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col p-4">
           <Outlet />
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
-}
+  );
+};
 
-export default DashboardLayout
-
+export default DashboardLayout;

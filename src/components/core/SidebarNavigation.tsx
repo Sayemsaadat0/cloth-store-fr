@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom";
 import {
   // LayoutDashboard,
   Briefcase,
@@ -6,7 +6,8 @@ import {
   User,
   Settings,
   Scale,
-} from "lucide-react"
+  Grid2X2Plus,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -14,34 +15,44 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { cn } from "@/lib/utils"
+} from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 const menuItems = [
   {
-    title: "Cases",
-    url: "/cases",
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: Grid2X2Plus,
+  },
+  {
+    title: "Products",
+    url: "/dashboard/products",
+    icon: Briefcase,
+  },
+  {
+    title: "Categories",
+    url: "/dashboard/categories",
     icon: Briefcase,
   },
   {
     title: "Members",
-    url: "/members",
+    url: "/dashboard/members",
     icon: Users,
   },
   {
     title: "Profile",
-    url: "/profile",
+    url: "/dashboard/profile",
     icon: User,
   },
   {
     title: "Settings",
-    url: "/settings",
+    url: "/dashboard/settings",
     icon: Settings,
   },
-]
+];
 
 export function SidebarNavigation() {
-  const location = useLocation()
+  const location = useLocation();
 
   return (
     <Sidebar className="">
@@ -54,8 +65,8 @@ export function SidebarNavigation() {
       <SidebarContent className="px-2 py-3">
         <SidebarMenu className="space-y-1">
           {menuItems.map((item) => {
-            const Icon = item.icon
-            const isActive = location.pathname === item.url
+            const Icon = item.icon;
+            const isActive = location.pathname === item.url;
 
             return (
               <SidebarMenuItem key={item.title}>
@@ -64,7 +75,9 @@ export function SidebarNavigation() {
                   isActive={isActive}
                   className={cn(
                     "h-9 px-3",
-                    isActive ? "bg-purple-600 text-white" : "text-black hover:bg-gray-100"
+                    isActive
+                      ? "bg-purple-600 text-white"
+                      : "text-black hover:bg-gray-100"
                   )}
                 >
                   <Link to={item.url} className="flex items-center gap-3">
@@ -73,11 +86,10 @@ export function SidebarNavigation() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )
+            );
           })}
         </SidebarMenu>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
-
