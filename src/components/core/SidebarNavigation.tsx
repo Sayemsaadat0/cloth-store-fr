@@ -35,6 +35,11 @@ const menuItems = [
     icon: Briefcase,
   },
   {
+    title: "Users",
+    url: "/dashboard/users",
+    icon: Users,
+  },
+  {
     title: "Members",
     url: "/dashboard/members",
     icon: Users,

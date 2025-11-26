@@ -4,11 +4,11 @@ export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
-        url: "/auth/login",
+        url: "/login",
         method: "POST",
         body: credentials,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Users"],
     }),
     changePassword: builder.mutation({
       query: (data) => ({
@@ -22,7 +22,7 @@ export const authApi = baseApi.injectEndpoints({
         url: "/users/me",
         method: "GET",
       }),
-      providesTags: ["User"],
+      providesTags: ["Users"],
     }),
     updateUser: builder.mutation({
       query: (data) => ({
@@ -30,7 +30,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Users"],
     }),
   }),
 });

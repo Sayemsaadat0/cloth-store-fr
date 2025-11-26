@@ -5,6 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/Router";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { Toaster } from "sonner";
 // import router from './Routes/Routes.jsx'
 // import AuthProvider from './Provider/AuthProvider'
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster />
     </Provider>
   </React.StrictMode>
 );

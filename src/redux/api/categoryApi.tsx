@@ -4,7 +4,7 @@ const categoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createCategory: builder.mutation({
       query: (data) => ({
-        url: "/product-category/create",
+        url: "/categories",
         method: "POST",
         body: data,
       }),
@@ -13,7 +13,7 @@ const categoryApi = baseApi.injectEndpoints({
 
     getAllCategories: builder.query({
       query: (params) => ({
-        url: "/product-category",
+        url: "/categories",
         params,
       }),
       providesTags: ["Category"],
@@ -21,7 +21,7 @@ const categoryApi = baseApi.injectEndpoints({
 
     editCategory: builder.mutation({
       query: ({ id, data }) => ({
-        url: `/product-category/${id}`,
+        url: `/categories/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -29,13 +29,13 @@ const categoryApi = baseApi.injectEndpoints({
     }),
 
     getSingleCategory: builder.query({
-      query: (id) => `/product-category/${id}`,
-      providesTags: (result, error, id) => [{ type: "Category", id }],
+      query: (id) => `/categories/${id}`,
+      providesTags: ["Category"],
     }),
 
     deleteCategory: builder.mutation({
       query: (id) => ({
-        url: `/product-category/${id}`,
+        url: `/categories/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Category"],

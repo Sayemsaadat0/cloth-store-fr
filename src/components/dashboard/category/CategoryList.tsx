@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -25,23 +26,30 @@ import {
 
 import { Switch } from "@/components/ui/switch";
 
+import {
+  useCreateCategoryMutation,
+  useDeleteCategoryMutation,
+  useEditCategoryMutation,
+  useGetAllCategoriesQuery,
+} from "@/redux/api/categoryApi";
+
 type Category = {
   id: string;
   name: string;
-  status: boolean;
+  status: string; // "active" | "inactive"
 };
 
 type FormValues = {
   name: string;
-  status: boolean;
+  status: boolean; // switch value (true/false)
 };
 
 export default function CategoryList() {
-  // 🔥 DEMO DATA
-  const [categories, setCategories] = useState<Category[]>([
-    { id: "1", name: "Electronics", status: true },
-    { id: "2", name: "Fashion", status: false },
-  ]);
+  const { data, isLoading } = useGetAllCategoriesQuery({});
+
+  const [deleteCategory] = useDeleteCategoryMutation();
+
+  const categories: Category[] = data?.data?.categories || [];
 
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"create" | "edit">("create");
@@ -69,7 +77,7 @@ export default function CategoryList() {
     });
 
     if (result.isConfirmed) {
-      setCategories((prev) => prev.filter((c) => c.id !== cat.id));
+      await deleteCategory(cat.id);
       Swal.fire("Deleted", "", "success");
     }
   };
@@ -94,26 +102,32 @@ export default function CategoryList() {
           </TableHeader>
 
           <TableBody>
-            {categories.length === 0 ? (
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center py-8">
+                  Loading...
+                </TableCell>
+              </TableRow>
+            ) : categories.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={3} className="text-center py-8">
                   No categories found.
                 </TableCell>
               </TableRow>
             ) : (
-              categories.map((cat) => (
+              categories?.map((cat) => (
                 <TableRow key={cat.id}>
                   <TableCell>{cat.name}</TableCell>
 
                   <TableCell>
                     <span
                       className={`px-2 py-1 text-sm rounded ${
-                        cat.status
+                        cat.status === "active"
                           ? "bg-green-100 text-green-700"
                           : "bg-red-100 text-red-700"
                       }`}
                     >
-                      {cat.status ? "Active" : "Inactive"}
+                      {cat.status}
                     </span>
                   </TableCell>
 
@@ -154,17 +168,7 @@ export default function CategoryList() {
             mode={mode}
             initialValues={selected}
             onClose={() => setOpen(false)}
-            onSubmitSuccess={(newData) => {
-              if (mode === "create") {
-                setCategories((prev) => [...prev, newData]);
-              } else {
-                setCategories((prev) =>
-                  prev.map((c) =>
-                    c.id === newData.id ? { ...c, ...newData } : c
-                  )
-                );
-              }
-            }}
+            onSubmitSuccess={() => {}}
           />
         </DialogContent>
       </Dialog>
@@ -172,9 +176,6 @@ export default function CategoryList() {
   );
 }
 
-// -------------------------------------
-// Category Form (Reusable)
-// -------------------------------------
 function CategoryForm({
   mode,
   initialValues,
@@ -184,8 +185,11 @@ function CategoryForm({
   mode: "create" | "edit";
   initialValues?: Category | null;
   onClose: () => void;
-  onSubmitSuccess: (updated: Category) => void;
+  onSubmitSuccess: () => void;
 }) {
+  const [createCategory] = useCreateCategoryMutation();
+  const [updateCategory] = useEditCategoryMutation();
+
   const {
     register,
     handleSubmit,
@@ -196,41 +200,64 @@ function CategoryForm({
   } = useForm<FormValues>({
     defaultValues: {
       name: initialValues?.name ?? "",
-      status: initialValues?.status ?? true,
+      status: initialValues?.status === "active" ? true : false,
     },
   });
 
   useEffect(() => {
     reset({
       name: initialValues?.name ?? "",
-      status: initialValues?.status ?? true,
+      status: initialValues?.status === "active" ? true : false,
     });
   }, [initialValues, reset]);
 
   const status = watch("status");
 
   const onSubmit = async (data: FormValues) => {
-    let newCategory: Category;
+    const payload = {
+      name: data.name.trim(),
+      status: data.status ? "active" : "inactive",
+    };
 
-    if (mode === "create") {
-      newCategory = {
-        id: crypto.randomUUID(),
-        name: data.name.trim(),
-        status: data.status,
-      };
-      Swal.fire("Success", "Category created", "success");
-    } else {
-      newCategory = {
-        id: initialValues!.id,
-        name: data.name.trim(),
-        status: data.status,
-      };
-      Swal.fire("Success", "Category updated", "success");
+    try {
+      let res;
+
+      if (mode === "create") {
+        res = await createCategory(payload).unwrap();
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: res?.message || "Category created successfully",
+        });
+      } else {
+        res = await updateCategory({
+          id: initialValues!.id,
+          data: payload,
+        }).unwrap();
+
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: res?.message || "Category updated successfully",
+        });
+      }
+
+      // Callback to parent
+      onSubmitSuccess();
+
+      onClose();
+      reset();
+    } catch (err: any) {
+      const backendMessage =
+        err?.data?.message || err?.error || "Something went wrong. Try again.";
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: backendMessage,
+      });
     }
-
-    onSubmitSuccess(newCategory);
-    onClose();
-    reset();
   };
 
   return (

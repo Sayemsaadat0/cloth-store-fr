@@ -3,6 +3,7 @@ import PublicMain from "../components/layout/PublicMain";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { lazy, Suspense } from "react";
 import DashboardHome from "@/pages/dashboard/DashboardHome";
+import UserManagement from "@/pages/dashboard/UserManagement";
 
 const Home = lazy(() => import("../pages/Home"));
 const Cases = lazy(() => import("../pages/Cases"));
@@ -13,6 +14,7 @@ const Settings = lazy(() => import("../pages/dashboard/Settings"));
 const Products = lazy(() => import("../pages/dashboard/ProductManagement"));
 const Categories = lazy(() => import("../pages/dashboard/CategoryManagement"));
 
+const LoginPage = lazy(() => import("../pages/auth/LoginPage"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<p>Loading...</p>}>
             <Products />
+          </Suspense>
+        ),
+      },
+      {
+        path: "users",
+        element: (
+          <Suspense fallback={<p>Loading...</p>}>
+            <UserManagement />
           </Suspense>
         ),
       },
@@ -89,6 +99,14 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/login",
+    element: (
+      <Suspense fallback={<p>Loading...</p>}>
+        <LoginPage />
+      </Suspense>
+    ),
   },
 ]);
 
