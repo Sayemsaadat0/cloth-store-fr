@@ -3,13 +3,11 @@ import PublicMain from "../components/layout/PublicMain";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { lazy, Suspense } from "react";
 import DashboardHome from "@/pages/dashboard/DashboardHome";
-import UserManagement from "@/pages/dashboard/UserManagement";
+import Playground from "@/pages/dashboard/Playground";
 
 const Home = lazy(() => import("../pages/Home"));
 const Cases = lazy(() => import("../pages/Cases"));
-const Members = lazy(() => import("../pages/Members"));
 const Profile = lazy(() => import("../pages/Profile"));
-const Settings = lazy(() => import("../pages/dashboard/Settings"));
 
 const Products = lazy(() => import("../pages/dashboard/ProductManagement"));
 const Categories = lazy(() => import("../pages/dashboard/CategoryManagement"));
@@ -28,6 +26,7 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+
     ],
   },
   {
@@ -43,18 +42,18 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "products",
+        path: "playground",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
-            <Products />
+            <Playground />
           </Suspense>
         ),
       },
       {
-        path: "users",
+        path: "products",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
-            <UserManagement />
+            <Products />
           </Suspense>
         ),
       },
@@ -75,26 +74,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "members",
-        element: (
-          <Suspense fallback={<p>Loading...</p>}>
-            <Members />
-          </Suspense>
-        ),
-      },
-      {
         path: "profile",
         element: (
           <Suspense fallback={<p>Loading...</p>}>
             <Profile />
-          </Suspense>
-        ),
-      },
-      {
-        path: "settings",
-        element: (
-          <Suspense fallback={<p>Loading...</p>}>
-            <Settings />
           </Suspense>
         ),
       },

@@ -2,9 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import {
   // LayoutDashboard,
   Briefcase,
-  Users,
   User,
-  Settings,
   Scale,
   Grid2X2Plus,
 } from "lucide-react";
@@ -35,24 +33,9 @@ const menuItems = [
     icon: Briefcase,
   },
   {
-    title: "Users",
-    url: "/dashboard/users",
-    icon: Users,
-  },
-  {
-    title: "Members",
-    url: "/dashboard/members",
-    icon: Users,
-  },
-  {
     title: "Profile",
     url: "/dashboard/profile",
     icon: User,
-  },
-  {
-    title: "Settings",
-    url: "/dashboard/settings",
-    icon: Settings,
   },
 ];
 

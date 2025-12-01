@@ -33,12 +33,13 @@ import {
 } from "@/redux/api/productApi";
 import { useGetAllCategoriesQuery } from "@/redux/api/categoryApi";
 import { Input } from "@/components/ui/input";
+import CloudinaryImageUpload from "@/components/core/CloudineryImageUpload";
 
 // -------------------------
 // Types
 // -------------------------
 type FormValues = {
-  thumbnail?: FileList;
+  thumbnail?: string;
   name: string;
   description: string;
   category_id: string;
@@ -83,13 +84,21 @@ export default function ProductManagement() {
     if (result.isConfirmed) {
       try {
         const res = await deleteProduct(product.id).unwrap();
-        Swal.fire("Success", res?.message || "Product deleted", "success");
+        await Swal.fire({
+          title: "Success",
+          text: res?.message || "Product deleted",
+          icon: "success",
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+        });
       } catch (error: any) {
-        Swal.fire(
-          "Error",
-          error?.data?.message || "Something went wrong",
-          "error"
-        );
+        await Swal.fire({
+          title: "Error",
+          text: error?.data?.message || "Something went wrong",
+          icon: "error",
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+        });
       }
     }
   };
@@ -174,7 +183,7 @@ export default function ProductManagement() {
 
       {/* Modal Form */}
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[80%] overflow-auto">
           <DialogHeader>
             <DialogTitle>
               {mode === "create" ? "Create Product" : `Edit: ${selected?.name}`}
@@ -225,7 +234,7 @@ function ProductForm({
       name: initialValues?.name ?? "",
       description: initialValues?.description ?? "",
       category_id: initialValues?.category_id ?? "",
-      thumbnail: undefined,
+      thumbnail: initialValues?.thumbnail ?? "",
     },
   });
 
@@ -234,9 +243,13 @@ function ProductForm({
       name: initialValues?.name ?? "",
       description: initialValues?.description ?? "",
       category_id: initialValues?.category_id ?? "",
-      thumbnail: undefined,
+      thumbnail: initialValues?.thumbnail ?? "",
     });
   }, [initialValues, reset]);
+
+  const handleImageUpload = (imageUrl: string) => {
+    setValue("thumbnail", imageUrl);
+  };
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -244,30 +257,44 @@ function ProductForm({
       formData.append("name", data.name);
       formData.append("description", data.description);
       formData.append("category_id", data.category_id);
-      if (data.thumbnail && data.thumbnail[0]) {
-        formData.append("thumbnail", data.thumbnail[0]);
+      if (data.thumbnail) {
+        formData.append("thumbnail", data.thumbnail);
       }
 
       let res;
       if (mode === "create") {
         res = await createProduct(formData).unwrap();
-        Swal.fire("Success", res?.message || "Product created", "success");
+        await Swal.fire({
+          title: "Success",
+          text: res?.message || "Product created",
+          icon: "success",
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+        });
       } else {
         res = await updateProduct({
           id: initialValues.id,
           data: formData,
         }).unwrap();
-        Swal.fire("Success", res?.message || "Product updated", "success");
+        await Swal.fire({
+          title: "Success",
+          text: res?.message || "Product updated",
+          icon: "success",
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+        });
       }
 
       onClose();
       reset();
     } catch (error: any) {
-      Swal.fire(
-        "Error",
-        error?.data?.message || "Something went wrong",
-        "error"
-      );
+      await Swal.fire({
+        title: "Error",
+        text: error?.data?.message || "Something went wrong",
+        icon: "error",
+        confirmButtonText: "OK",
+        allowOutsideClick: false,
+      });
     }
   };
 
@@ -319,7 +346,16 @@ function ProductForm({
 
       <div>
         <Label>Thumbnail</Label>
-        <Input type="file" accept="image/*" {...register("thumbnail")} />
+        <CloudinaryImageUpload
+          fieldName="thumbnail"
+          onImageUpload={handleImageUpload}
+          initialValue={watch("thumbnail") || ""}
+        />
+        <input
+          type="hidden"
+          {...register("thumbnail")}
+          value={watch("thumbnail") || ""}
+        />
       </div>
 
       <DialogFooter>

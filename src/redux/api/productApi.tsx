@@ -7,6 +7,9 @@ const productApi = baseApi.injectEndpoints({
         url: "/products",
         method: "POST",
         body: data,
+        // headers: {
+        //   // Authorization: `Bearer `,
+        // },
       }),
       invalidatesTags: ["Product"],
     }),
