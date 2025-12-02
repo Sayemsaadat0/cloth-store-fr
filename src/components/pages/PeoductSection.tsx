@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Heart, ArrowRight, Star, Package, Shield } from "lucide-react";
+import { ArrowRight, Star, Package, Shield } from "lucide-react";
 import { ImageWithFallback } from "../core/ImageWithFallBack";
 import { Button } from "../ui/button";
 import {
@@ -96,7 +96,7 @@ export function PeoductSection() {
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   {/* Product Image */}
-                  <div className="relative aspect-3/4 overflow-hidden">
+                  <div className="relative aspect-4:4 overflow-hidden">
                     <ImageWithFallback
                       src={product?.thumbnail}
                       alt={product.name}
@@ -105,9 +105,7 @@ export function PeoductSection() {
                     <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"></div>
 
                     {/* Wishlist button */}
-                    <button className="absolute right-4 top-4 rounded-full border border-white/30 bg-white/20 p-3 backdrop-blur-xl opacity-0 transition-all hover:scale-110 hover:bg-white/30 group-hover/card:opacity-100">
-                      <Heart className="h-5 w-5 text-white" />
-                    </button>
+                    
 
                     {/* Category badge */}
                     <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/40 px-4 py-2 text-xs tracking-wider text-white backdrop-blur-xl">
@@ -145,12 +143,12 @@ export function PeoductSection() {
             </div>
 
             {/* Enhanced View All Button */}
-            <div className="mt-16 text-center">
+            {/* <div className="mt-16 text-center">
               <Button className="group/btn relative overflow-hidden rounded-full border-2 border-white/40 bg-white/20 px-16 py-7 text-white backdrop-blur-xl transition-all hover:scale-105 hover:border-white/60 hover:bg-white/30 hover:shadow-2xl hover:shadow-white/20">
                 <span className="relative z-10">View All Products</span>
                 <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 opacity-0 transition-opacity group-hover/btn:opacity-100"></div>
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
