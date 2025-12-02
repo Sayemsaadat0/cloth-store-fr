@@ -26,7 +26,7 @@ const productApi = baseApi.injectEndpoints({
     editProduct: builder.mutation({
       query: ({ id, data }) => ({
         url: `/products/${id}`,
-        method: "PUT",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Product"],

@@ -45,9 +45,9 @@ export function SidebarNavigation() {
   return (
     <Sidebar className="">
       <SidebarHeader className="border-b px-4 h-16 flex items-center">
-        <Link to="/cases" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <Scale className="h-5 w-5 text-black" />
-          <span className="font-semibold text-sm text-black">Law Firm</span>
+          <span className="font-semibold text-sm text-black">Elegance</span>
         </Link>
       </SidebarHeader>
       <SidebarContent className="px-2 py-3">

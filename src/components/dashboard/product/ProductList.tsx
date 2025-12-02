@@ -264,7 +264,7 @@ function ProductForm({
       let res;
       if (mode === "create") {
         res = await createProduct(formData).unwrap();
-        await Swal.fire({
+        Swal.fire({
           title: "Success",
           text: res?.message || "Product created",
           icon: "success",
@@ -276,7 +276,7 @@ function ProductForm({
           id: initialValues.id,
           data: formData,
         }).unwrap();
-        await Swal.fire({
+        Swal.fire({
           title: "Success",
           text: res?.message || "Product updated",
           icon: "success",
